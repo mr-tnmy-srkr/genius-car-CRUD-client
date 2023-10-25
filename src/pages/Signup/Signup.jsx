@@ -1,32 +1,31 @@
 import { Link } from "react-router-dom";
 import img from "../../assets/images/login/login.svg";
-import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-const Login = () => {
+import { useContext } from "react";
 
-const {signIn} = useContext(AuthContext)
+const Signup = () => {
+  const { createUser } = useContext(AuthContext);
 
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(name, email, password);
 
-const handleLogin = e =>{
-  e.preventDefault();
-   const form = e.target;
-   const email = form.email.value
-   const password = form.password.value
-console.log(email, password);
-
-signIn(email, password)
-.then((userCredential) => {
-  // Sign in
-  const user = userCredential.user;
-  console.log(user);
-})
-.catch((error) => {
-  const errorCode = error.code;
-  const errorMessage = error.message;
-  console.log(errorCode, errorMessage);
-});
-
-}
+    createUser(email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
 
   return (
     <div>
@@ -36,8 +35,21 @@ signIn(email, password)
             <img src={img} alt="" />
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form onSubmit={handleLogin} className="card-body">
-              <h1 className="text-5xl text-center font-bold">Login now!</h1>
+            <form onSubmit={handleSignUp} className="card-body">
+              <h1 className="text-5xl text-center font-bold">Signup now!</h1>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  type="name"
+                  placeholder="Name"
+                  name="name"
+                  autoComplete="on"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -46,14 +58,14 @@ signIn(email, password)
                   type="email"
                   placeholder="Email"
                   name="email"
-                  className="input input-bordered"
                   autoComplete="on"
+                  className="input input-bordered"
                   required
                 />
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Password</span>
+                  <span className="label-text">Confirm Password</span>
                 </label>
                 <input
                   type="password"
@@ -70,12 +82,16 @@ signIn(email, password)
               </div>
               <div className="form-control mt-6">
                 <button className="btn btn-primary" type="submit">
-                  Login
+                  Sign up
                 </button>
               </div>
             </form>
-            <p className="my-4 text-center">New to Cars Doctors <Link className="text-orange-600 font-bold"
-             to="/signup">Sign Up</Link></p>
+            <p className="my-4 text-center">
+              New to Cars Doctors
+              <Link className="text-orange-600 font-bold ml-2" to="/login">
+                Login
+              </Link>
+            </p>
           </div>
         </div>
       </div>
@@ -83,4 +99,4 @@ signIn(email, password)
   );
 };
 
-export default Login;
+export default Signup;

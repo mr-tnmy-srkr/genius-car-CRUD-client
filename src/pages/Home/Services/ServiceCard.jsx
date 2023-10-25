@@ -1,4 +1,5 @@
 import { FaArrowAltCircleRight } from "react-icons/fa";
+import PropTypes from 'prop-types';
 
 const ServiceCard = ({ service }) => {
   const { title, img, price } = service;
@@ -22,5 +23,7 @@ const ServiceCard = ({ service }) => {
     </div>
   );
 };
-
+ServiceCard.propTypes = {
+  service: PropTypes.object.isRequired,
+};
 export default ServiceCard;
