@@ -1,8 +1,9 @@
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
 const ServiceCard = ({ service }) => {
-  const { title, img, price } = service;
+  const { _id,title, img, price } = service;
 
   return (
     <div>
@@ -14,9 +15,9 @@ const ServiceCard = ({ service }) => {
           <h2 className="card-title">{title}</h2>
           <div className="flex items-center">
             <p className="text-[#FF3811] font-medium">Price : ${price}</p>
-            <p className="flex justify-end text-[#FF3811] cursor-pointer">
+            <Link to={`/checkout/${_id}`} className="flex justify-end text-[#FF3811] cursor-pointer">
               <FaArrowAltCircleRight size={`25px`}/>
-            </p>
+            </Link>
           </div>
         </div>
       </div>
