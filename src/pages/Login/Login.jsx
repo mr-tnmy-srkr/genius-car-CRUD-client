@@ -6,7 +6,6 @@ const Login = () => {
 
 const {signIn} = useContext(AuthContext)
 
-
 const handleLogin = e =>{
   e.preventDefault();
    const form = e.target;
