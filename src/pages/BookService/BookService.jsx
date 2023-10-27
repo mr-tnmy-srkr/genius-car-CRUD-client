@@ -54,7 +54,6 @@ const BookService = () => {
 
   return (
     <div>
-      <NavBar></NavBar>
       <h1 className="text-3xl text-center py-12"> Book Service : {title}</h1>
       <div className="hero bg-base-200 w-full">
         <div className="hero-content w-full px-0 py-0">
