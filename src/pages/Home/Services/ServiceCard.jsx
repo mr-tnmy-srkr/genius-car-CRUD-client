@@ -15,7 +15,7 @@ const ServiceCard = ({ service }) => {
           <h2 className="card-title">{title}</h2>
           <div className="flex items-center">
             <p className="text-[#FF3811] font-medium">Price : ${price}</p>
-            <Link to={`/checkout/${_id}`} className="flex justify-end text-[#FF3811] cursor-pointer">
+            <Link to={`/book/${_id}`} className="flex justify-end text-[#FF3811] cursor-pointer">
               <FaArrowAltCircleRight size={`25px`}/>
             </Link>
           </div>

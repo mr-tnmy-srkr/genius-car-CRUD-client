@@ -1,22 +1,43 @@
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const NavBar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
+
   const NavItems = (
     <>
-      <Link to="/">
-        <a>Home</a>
-      </Link>
-      <Link to={`/about`}>
-        <a>About</a>
-      </Link>
-      <Link >
-        <a>Services</a>
-      </Link>  <Link >
-        <a>Blog</a>
-      </Link>  <Link >
-        <a>Contact</a>
-      </Link>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to={`/about`}>About</Link>
+      </li>
+      <li>
+        <Link>Services</Link>
+      </li>
+      {/* <Link>Blog</Link> */}
+      {/* <Link>Contact</Link> */}
+      {user?.email ? (
+        <li>
+          <Link>
+            <button onClick={handleLogOut}>Logout</button>
+          </Link>
+        </li>
+      ) : (
+        <li>
+          <Link to="/login">
+            <button>Login</button>
+          </Link>
+        </li>
+      )}
     </>
   );
 
@@ -45,7 +66,7 @@ const NavBar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] shadow bg-base-100 rounded-box w-52 space-y-3 p-4 text-lg w-36"
             >
-             {NavItems}
+              {NavItems}
             </ul>
           </div>
           <Link to="/" className="normal-case text-xl px-0">
@@ -57,7 +78,7 @@ const NavBar = () => {
             tabIndex={0}
             className="pb-4 hidden md:flex items-center  gap-5 mt-3 z-[1] p-2  bg-base-100 rounded-box "
           >
-              {NavItems}
+            {NavItems}
           </ul>
         </div>
         <div className="navbar-end">
@@ -96,7 +117,9 @@ const NavBar = () => {
               <span className="badge badge-xs badge-primary indicator-item"></span>
             </div>
           </button>
-            <button className="btn btn-outline btn-warning capitalize ml-4">Appointment</button>
+          <button className="btn btn-outline btn-warning capitalize ml-4">
+            Appointment
+          </button>
         </div>
       </div>
     </div>
