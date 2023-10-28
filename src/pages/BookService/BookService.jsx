@@ -1,5 +1,4 @@
 import { useLoaderData } from "react-router-dom";
-import NavBar from "../Shared/Navbar/NavBar";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
