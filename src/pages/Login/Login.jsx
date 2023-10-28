@@ -1,33 +1,49 @@
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from "../../assets/images/login/login.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import axios from "axios";
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  // console.log(location);
 
-const {signIn} = useContext(AuthContext)
-const navigate = useNavigate()
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
 
-const handleLogin = e =>{
-  e.preventDefault();
-   const form = e.target;
-   const email = form.email.value
-   const password = form.password.value
-console.log(email, password);
+    signIn(email, password)
+      .then((userCredential) => {
+        // Sign in
+        const loggedInUser = userCredential.user;
+        console.log(loggedInUser);
 
-signIn(email, password)
-.then((userCredential) => {
-  // Sign in
-  const user = userCredential.user;
-  console.log(user);
-  navigate("/")
-})
-.catch((error) => {
-  const errorCode = error.code;
-  const errorMessage = error.message;
-  console.log(errorCode, errorMessage);
-});
+        const user = { email };
 
-}
+        //get access token
+
+        axios
+          .post("http://localhost:5000/jwt", user, { withCredentials: true })
+          .then((res) => {
+            console.log(res.data);
+            //go to bookings route line no 16 ..withCredential : true
+            if (res.data.success) {
+              navigate(location?.state ? location?.state : "/", {
+                replace: true,
+              });
+            }
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
 
   return (
     <div>
@@ -75,8 +91,12 @@ signIn(email, password)
                 </button>
               </div>
             </form>
-            <p className="my-4 text-center">New to Cars Doctors <Link className="text-orange-600 font-bold"
-             to="/signup">Sign Up</Link></p>
+            <p className="my-4 text-center">
+              New to Cars Doctors{" "}
+              <Link className="text-orange-600 font-bold" to="/signup">
+                Sign Up
+              </Link>
+            </p>
           </div>
         </div>
       </div>

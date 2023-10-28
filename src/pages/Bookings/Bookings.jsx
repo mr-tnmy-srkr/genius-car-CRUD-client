@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import BookingRow from "./BookingRow";
+import axios from "axios";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -10,10 +11,17 @@ const Bookings = () => {
   //new focus ?query start ===========================================================
   const url = `http://localhost:5000/bookings?email=${user?.email}`;
   useEffect(() => {
-    fetch(url)
+    axios
+      .get(url, { withCredentials: true })
+      // then go to backend --> app.get("/bookings",...)
+      .then((res) => {
+        setBookings(res.data);
+      });
+
+    /*  fetch(url)
       //then go to backend --> app.get("/bookings",...)
       .then((res) => res.json())
-      .then((data) => setBookings(data));
+      .then((data) => setBookings(data)); */
   }, [url]);
   //new focus ?query end ==============================================================
 
@@ -36,28 +44,27 @@ const Bookings = () => {
     }
   };
 
-  const handleConfirm = id => {
-    
-    fetch(`http://localhost:5000/bookings/${id}`,{
-      method: 'PATCH',
-      headers:{
-        'Content-Type': 'application/json'
+  const handleConfirm = (id) => {
+    fetch(`http://localhost:5000/bookings/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body : JSON.stringify({status:'confirm'})
+      body: JSON.stringify({ status: "confirm" }),
     })
-    .then(res=>res.json())
-    .then(data=>{
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
-        if(data.modifiedCount>0){
-            // update state
-            const remaining = bookings.filter(booking => booking._id !== id)
-            const updated = bookings.find((booking) => booking._id === id)
-            updated.status = 'confirm'
-            const newBookings = [updated,...remaining];
-            setBookings(newBookings)
+        if (data.modifiedCount > 0) {
+          // update state
+          const remaining = bookings.filter((booking) => booking._id !== id);
+          const updated = bookings.find((booking) => booking._id === id);
+          updated.status = "confirm";
+          const newBookings = [updated, ...remaining];
+          setBookings(newBookings);
         }
-    })
-  }
+      });
+  };
 
   return (
     <div>
