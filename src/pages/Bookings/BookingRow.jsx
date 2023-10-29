@@ -1,9 +1,11 @@
+
 const BookingRow = ({ booking, handleDelete, handleConfirm }) => {
   const { _id, customerName, email, date, service, price, img, status } =
     booking;
   // console.log(_id);
   return (
     <tr>
+             
       {/*   <th>
         <label>
           <input type="checkbox" className="checkbox" />

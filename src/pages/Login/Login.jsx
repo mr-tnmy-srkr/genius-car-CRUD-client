@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import {Helmet} from "react-helmet";
 import img from "../../assets/images/login/login.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -47,6 +48,10 @@ const Login = () => {
 
   return (
     <div>
+     <Helmet>
+            <title>Login</title>
+            {/* <meta name="description" content="Nested component" /> */}
+        </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row">
           <div className="mr-12 w-1/2">

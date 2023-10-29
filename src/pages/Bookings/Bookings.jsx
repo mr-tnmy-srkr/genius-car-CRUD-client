@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import BookingRow from "./BookingRow";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -68,6 +69,10 @@ const Bookings = () => {
 
   return (
     <div>
+      <Helmet>
+                <meta charSet="utf-8" />
+                <title>Booking</title>
+            </Helmet>
       <h2 className="">Your bookings : {bookings.length}</h2>
 
       <div className="overflow-x-auto">
